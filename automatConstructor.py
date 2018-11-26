@@ -88,7 +88,8 @@ class Automat:
     
     def updateRecentlyUsedWords(self, word):
         if self.recentlyUsedWordsQueue.full():
-            self.recentlyUsedWordsQueue.get()
+            poppedBack = self.recentlyUsedWordsQueue.get()
+            self.wordDict[poppedBack][1] = 0
         self.recentlyUsedWordsQueue.put(word)
         self.wordDict[word][1] = 1
 
