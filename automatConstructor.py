@@ -1,5 +1,3 @@
-
-
 class Node:
 
     isFinal = None 
@@ -19,9 +17,12 @@ class Node:
 class Automat:
     
     initNode = None
+
+    wordDict = None
     
     def __init__(self):
         self.initNode = Node(False, "")
+        self.wordDict = dict()
 
 
     def addWord(self, word):
@@ -43,10 +44,17 @@ class Automat:
 
 
     def createFiniteStateMachine(self, fileName):
+        
+        listLabels = []
+        listLabels.append(0)
+        listLabels.append(0)
 
         with open(fileName, 'r') as f:
             for word in f.readlines():
                 self.addWord(word)
+                self.wordDict[word] = listLabels
+
+
 
 
     
