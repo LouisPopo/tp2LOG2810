@@ -42,5 +42,11 @@ class Automat:
             currentNode = currentNode.nextNodes[letter]
 
 
+    def createFiniteStateMachine(self, fileName):
+
+        with open(fileName, 'r') as f:
+            for word in f.readlines():
+                self.addWord(word)
+
 
     
