@@ -2,6 +2,9 @@ import os.path
 from automatConstructor import *
 
 
+#Create Automat object
+automat = Automat()
+
 #Choices display
 def display():
     print(
@@ -46,13 +49,13 @@ def write():
 
 #Option b: Display 5 recently used words
 def recentlyUsedWords():
-    #displayRecentlyUsedWords()
+    print("Mots récemment utilisés: " + automat.displayRecentlyUsedWords())
     menu()
 
 #Option c: Display how many times a word is used
 def wordCounter():
     wordToBeCounted = input("Veuillez entrer un mot: ")
-    #print("Le mot a été écrit " + displayWordCounter(wordToBeCounted) + " fois!")
+    print("Le mot a été écrit " + automat.displayWordCounter(wordToBeCounted) + " fois!")
     menu()
 
 #Option d: quit

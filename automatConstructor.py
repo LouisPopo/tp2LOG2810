@@ -27,7 +27,7 @@ class Automat:
     def __init__(self):
         self.initNode = Node(False, "")
         self.wordDict = dict()
-        self.recentlyUsedWordsQueue = Queue.Queue()
+        self.recentlyUsedWordsQueue = Queue.Queue(5)
 
 
     def addWord(self, word):
@@ -59,6 +59,8 @@ class Automat:
                 self.addWord(word)
                 self.wordDict[word] = listLabels
 
+    
+
     def updateWordCounter(self, word):
         self.wordDict[word][0] += 1
     
@@ -66,8 +68,13 @@ class Automat:
         if self.recentlyUsedWordsQueue.full():
             self.recentlyUsedWordsQueue.get()
         self.recentlyUsedWordsQueue.put(word)
+        self.wordDict[word][1] = 1
 
+    def displayRecentlyUsedWords(self):
+        return list(self.recentlyUsedWordsQueue)
 
+    def displayWordCounter(self, word):
+        return self.wordDict[word][0]
 
 
     
