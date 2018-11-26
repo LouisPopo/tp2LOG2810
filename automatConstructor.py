@@ -1,4 +1,10 @@
-import Queue
+import queue
+
+
+class ToListQueue(queue.Queue):
+    def to_list(self):
+        with self.mutex:
+            return list(self.queue)
 
 class Node:
 
@@ -30,7 +36,7 @@ class Automat:
     def __init__(self):
         self.initNode = Node(False, "")
         self.wordDict = dict()
-        self.recentlyUsedWordsQueue = Queue.Queue(5)
+        self.recentlyUsedWordsQueue = queue.Queue(5)
         self.possibleWords = list()
 
     def addWord(self, word):
@@ -58,18 +64,24 @@ class Automat:
 
         with open(fileName, 'r') as f:
             for word in f.readlines():
-                self.addWord(word)
-                self.wordDict[word] = listLabels
+                self.addWord(word.rstrip())
+                self.wordDict[word.rstrip()] = listLabels
 
+    #TODO
     def displayPossibleWords(self, semiWord):
+        """
         currentNode = self.initNode
         for letter in semiWord:
-            currentNode.nextNodes[letter]
+            if letter in currentNode.nextNodes:
+                currentNode = currentNode.nextNodes[letter]
+
         if currentNode.isFinal:
             self.possibleWords.append(currentNode.id)
+
         for letter in currentNode.nextNodes:
             self.displayPossibleWords(currentNode.id)
         return self.possibleWords
+        """
 
     def updateWordCounter(self, word):
         self.wordDict[word][0] += 1
@@ -81,7 +93,8 @@ class Automat:
         self.wordDict[word][1] = 1
 
     def displayRecentlyUsedWords(self):
-        return list(self.recentlyUsedWordsQueue)
+        listQueue = ToListQueue(self.recentlyUsedWordsQueue)
+        return listQueue.to_list()
 
     def displayWordCounter(self, word):
         return self.wordDict[word][0]

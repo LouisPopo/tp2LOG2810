@@ -49,7 +49,8 @@ def OpenFile():
     #Error control: create file only if it exists
     while not fileExists(updatedFile):
         updatedFile = input("Veuillez entrer un fichier contenant des mots (avec l'extension .txt): ")
-        print ("Le nom de fichier n'existe pas")
+        if not fileExists(updatedFile):
+            print ("Le nom de fichier n'existe pas")
 
     #Create language with correct file
     automat.createFiniteStateMachine(updatedFile)
@@ -61,38 +62,51 @@ def OpenFile():
 #TODO
 #Option a: write
 def write():
-    wordWritten = None
-    wordWritten.clear
+    wordWritten = ""
     done = False
 
     while not done:
+
         display2()
-        print("Mot présent: " + wordWritten)
+        print("Mot présent: " + str(wordWritten))
         choice2 = input("Veuillez choisir un option (a ou b): ")
+
         if choice2 == 'a':
             letterToAdd = input("Veuillez ajouter une lettre à votre mot: ")
-            print("Mots possibles: " + automat.displayPossibleWords(letterToAdd))
+            wordWritten += letterToAdd
+            possibleWords = automat.displayPossibleWords(wordWritten)
+            if not possibleWords:
+                print("Aucun mot possible!")
+            else:
+                print("Mots possibles: " + automat.displayPossibleWords(wordWritten))
+
         elif choice2 == 'b':
             if automat.isWord(wordWritten):
                 automat.updateRecentlyUsedWords(wordWritten)
                 automat.updateWordCounter(wordWritten)
                 done = True
             else:
-                wordWritten = None
-                print("Ceci n'est pas un mot! Veuillez recommencer.")
+                choice3 = input("Ceci n'est pas un mot! Voulez-Vous recommencer? Si oui, tapez OUI: ")
+                wordWritten = ""
+                if choice3 != "OUI":
+                    menu()
+
         else:
             print("Veuillez choisir un option valide!")
     menu()
 
 #Option b: Display 5 recently used words
 def recentlyUsedWords():
-    print("Mots récemment utilisés: " + automat.displayRecentlyUsedWords())
+    print("Mots récemment utilisés: " + str(automat.displayRecentlyUsedWords()))
     menu()
 
 #Option c: Display how many times a word is used
 def wordCounter():
     wordToBeCounted = input("Veuillez entrer un mot: ")
-    print("Le mot a été écrit " + automat.displayWordCounter(wordToBeCounted) + " fois!")
+    if automat.isWord(wordToBeCounted):
+        print("Le mot a été écrit " + str(automat.displayWordCounter(wordToBeCounted)) + " fois!")
+    else:
+        print("Le mot n'est pas dans le lexique!")
     menu()
 
 #Option d: quit
