@@ -16,6 +16,7 @@ class Node:
     def addNode(self, letter, isFinal): 
         self.nextNodes[letter] = Node(isFinal, letter)
 
+
 class Automat:
     
     initNode = None
@@ -23,12 +24,14 @@ class Automat:
     wordDict = None
 
     recentlyUsedWordsQueue = None
+
+    possibleWords = None
     
     def __init__(self):
         self.initNode = Node(False, "")
         self.wordDict = dict()
         self.recentlyUsedWordsQueue = Queue.Queue(5)
-
+        self.possibleWords = list()
 
     def addWord(self, word):
 
@@ -47,7 +50,6 @@ class Automat:
 
             currentNode = currentNode.nextNodes[letter]
 
-
     def createFiniteStateMachine(self, fileName):
         
         listLabels = []
@@ -59,7 +61,15 @@ class Automat:
                 self.addWord(word)
                 self.wordDict[word] = listLabels
 
-    
+    def displayPossibleWords(self, semiWord):
+        currentNode = self.initNode
+        for letter in semiWord:
+            currentNode.nextNodes[letter]
+        if currentNode.isFinal:
+            self.possibleWords.append(currentNode.id)
+        for letter in currentNode.nextNodes:
+            self.displayPossibleWords(currentNode.id)
+        return self.possibleWords
 
     def updateWordCounter(self, word):
         self.wordDict[word][0] += 1
@@ -75,6 +85,11 @@ class Automat:
 
     def displayWordCounter(self, word):
         return self.wordDict[word][0]
+
+    def isWord(self, word):
+        if word in self.wordDict:
+            return True
+        return False
 
 
     

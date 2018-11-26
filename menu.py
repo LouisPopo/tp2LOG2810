@@ -21,6 +21,21 @@ def display():
 '''
     )
 
+#Choices display2
+def display2():
+    print(
+'''
+
+**************************************************
+*                    Choix:                      *
+**************************************************
+* a) Ajouter une lettre au mot                   *
+* b) Entrer le mot                               *
+**************************************************
+'''
+    )
+
+
 #Returns true if file exists
 def fileExists(fileName):
     return os.path.isfile(fileName)
@@ -37,14 +52,36 @@ def OpenFile():
         print ("Le nom de fichier n'existe pas")
 
     #Create language with correct file
-    #createLanguage(updatedFile)
+    automat.createFiniteStateMachine(updatedFile)
     print("Fichier recu!")
 
     #Go to menu
     menu()
 
+#TODO
 #Option a: write
 def write():
+    wordWritten = None
+    wordWritten.clear
+    done = False
+
+    while not done:
+        display2()
+        print("Mot présent: " + wordWritten)
+        choice2 = input("Veuillez choisir un option (a ou b): ")
+        if choice2 == 'a':
+            letterToAdd = input("Veuillez ajouter une lettre à votre mot: ")
+            print("Mots possibles: " + automat.displayPossibleWords(letterToAdd))
+        elif choice2 == 'b':
+            if automat.isWord(wordWritten):
+                automat.updateRecentlyUsedWords(wordWritten)
+                automat.updateWordCounter(wordWritten)
+                done = True
+            else:
+                wordWritten = None
+                print("Ceci n'est pas un mot! Veuillez recommencer.")
+        else:
+            print("Veuillez choisir un option valide!")
     menu()
 
 #Option b: Display 5 recently used words

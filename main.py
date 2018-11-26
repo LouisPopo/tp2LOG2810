@@ -27,7 +27,7 @@ def main():
     a = Automat()
     a.createFiniteStateMachine('lexique1.txt')
     print(a.initNode.nextNodes['c'].nextNodes['a'].nextNodes['i'].id)
-
+    
      
 
 
