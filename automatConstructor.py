@@ -1,4 +1,4 @@
-import Queue
+import queue
 
 class Node:
 
@@ -27,7 +27,7 @@ class Automat:
     def __init__(self):
         self.initNode = Node(False, "")
         self.wordDict = dict()
-        self.recentlyUsedWordsQueue = Queue.Queue()
+        self.recentlyUsedWordsQueue = queue.Queue(5)
 
 
     def addWord(self, word):
@@ -58,6 +58,7 @@ class Automat:
             for word in f.readlines():
                 self.addWord(word)
                 self.wordDict[word] = listLabels
+
 
     def updateWordCounter(self, word):
         self.wordDict[word][0] += 1

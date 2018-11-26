@@ -23,10 +23,15 @@ def main():
 
     tot_m, used_m, free_m = map(int, os.popen('free -t -m').readlines()[-1].split()[1:])
     """
+
+
+    # 1. creer un automate a laide dun fichier
+    # 2. creer un wordsAlgos a laide de lautomate
+    # 3. caller les fonctions sur wordsAlgos
     #OpenFile()
     a = Automat()
-    a.createFiniteStateMachine('lexique1.txt')
-    print(a.initNode.nextNodes['c'].nextNodes['a'].nextNodes['i'].id)
+    a.createFiniteStateMachine('lexique6.txt')
+    print(a.initNode.nextNodes['a'].nextNodes['b'].nextNodes['s'].id)
 
      
 
