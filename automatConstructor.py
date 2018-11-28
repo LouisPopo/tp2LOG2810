@@ -67,6 +67,29 @@ class Automat:
                 self.addWord(word.rstrip())
                 self.wordDict[word.rstrip()] = listLabels
 
+
+    def findWordState(self, word):  # prend le debut d'un mot, ou un mot, et retourne le noeud dans l'automate qui contient le semi-mot, ou 
+                                    # le noeud initial s'il n'existe pas. 
+        currentNode = self.initNode
+
+        for letter in word:
+            if letter in currentNode.nextNodes:
+                currentNode = currentNode.nextNodes[letter] # on change de noeud on est rendu dans le suivant
+            else :
+                return currentNode
+        return currentNode
+
+    def findPossibleWords(self, node):
+        possibleWords = [] # liste vide qui va contenir les mots finaux
+
+        if node.isFinal :
+            possibleWords.append(node)
+
+        if node.nextNodes : # si le noeud contient des enfants
+            for nextNode in node.nextNodes:
+            possibleWords.append(self.possibleWords(nextNode))
+
+
     #TODO
     def displayPossibleWords(self, semiWord):
         """

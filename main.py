@@ -23,9 +23,12 @@ def main():
 
     tot_m, used_m, free_m = map(int, os.popen('free -t -m').readlines()[-1].split()[1:])
     """
-    OpenFile()
-    #a = Automat()
-    #a.createFiniteStateMachine('lexique1.txt')
+    #OpenFile()
+    a = Automat()
+    a.createFiniteStateMachine('lexique1.txt')
+
+    mot = a.findWordState('hfef')
+    print(mot.id)
     #print(a.wordDict)
 
      
