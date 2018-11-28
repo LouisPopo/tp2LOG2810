@@ -1,13 +1,10 @@
 import queue
-<<<<<<< HEAD
-=======
 
 
 class ToListQueue(queue.Queue):
     def to_list(self):
         with self.mutex:
             return list(self.queue)
->>>>>>> f0d2fd0b37a23afb0c1f23df1c9e16703289f040
 
 class Node:
 
@@ -24,6 +21,19 @@ class Node:
 
     def addNode(self, letter, isFinal): 
         self.nextNodes[letter] = Node(isFinal, letter)
+
+    def findPossibleWords(self): 
+        possibleWords = [] # liste vide qui va contenir les mots finaux
+
+        if self.isFinal :
+            possibleWords.append(self)
+
+        if self.nextNodes : # si le noeud contient des enfants
+            for nextLetter in self.nextNodes:
+                possibleWords = possibleWords + self.nextNodes[nextLetter].findPossibleWords()
+
+
+        return possibleWords
 
 
 class Automat:
@@ -83,15 +93,7 @@ class Automat:
                 return currentNode
         return currentNode
 
-    def findPossibleWords(self, node):
-        possibleWords = [] # liste vide qui va contenir les mots finaux
-
-        if node.isFinal :
-            possibleWords.append(node)
-
-        if node.nextNodes : # si le noeud contient des enfants
-            for nextNode in node.nextNodes:
-            possibleWords.append(self.possibleWords(nextNode))
+    
 
 
     #TODO

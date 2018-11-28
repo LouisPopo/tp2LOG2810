@@ -30,11 +30,13 @@ def main():
     # 3. caller les fonctions sur wordsAlgos
     #OpenFile()
     a = Automat()
-    a.createFiniteStateMachine('lexique1.txt')
+    a.createFiniteStateMachine('lexique6.txt')
 
-    mot = a.findWordState('hfef')
-    print(mot.id)
-    #print(a.wordDict)
+    node = a.findWordState('miss')
+    wordsList = node.findPossibleWords()
+
+    for finalWord in wordsList:
+        print(finalWord.id)
 
      
 
