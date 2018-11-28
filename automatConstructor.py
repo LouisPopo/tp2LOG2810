@@ -57,18 +57,22 @@ class Automat:
 
         currentNode = self.initNode
 
+        letterCounter = 1
+
         for letter in word:
             
             if letter not in currentNode.nextNodes:
                 
                 isFinal = False
-                if letter == word[-1]:
+                if letterCounter == len(word): #on arrive a la fin du mot
                     isFinal = True
                 
                 currentWord = currentNode.id + letter
                 currentNode.nextNodes[letter] = Node(isFinal, currentWord)
 
             currentNode = currentNode.nextNodes[letter]
+
+            letterCounter = letterCounter + 1
 
     def createFiniteStateMachine(self, fileName):
         

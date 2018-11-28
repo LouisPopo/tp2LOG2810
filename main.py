@@ -32,11 +32,12 @@ def main():
     a = Automat()
     a.createFiniteStateMachine('lexique6.txt')
 
-    node = a.findWordState('miss')
+    node = a.findWordState('exe')
     wordsList = node.findPossibleWords()
 
     for finalWord in wordsList:
         print(finalWord.id)
+    
 
      
 
