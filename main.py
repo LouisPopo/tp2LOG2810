@@ -38,8 +38,3 @@ def main():
     for finalWord in wordsList:
         print(finalWord.id)
     
-
-     
-
-
-main()
