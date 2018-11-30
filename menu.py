@@ -74,17 +74,22 @@ def write():
         if choice2 == 'a':
             letterToAdd = input("Veuillez ajouter une lettre à votre mot: ")
             wordWritten += letterToAdd
-            possibleWords = automat.displayPossibleWords(wordWritten)
+            node = automat.findWordState(wordWritten)
+            possibleWords = node.findPossibleWords()
             if not possibleWords:
                 print("Aucun mot possible!")
             else:
-                print("Mots possibles: " + automat.displayPossibleWords(wordWritten))
+                print("\nMots possibles: ")
+                for word in possibleWords:
+                    print(word.id + ", ")
+
 
         elif choice2 == 'b':
             if automat.isWord(wordWritten):
                 automat.updateRecentlyUsedWords(wordWritten)
                 automat.updateWordCounter(wordWritten)
                 done = True
+                print("Le mot existe et est mis à jour!")
             else:
                 choice3 = input("Ceci n'est pas un mot! Voulez-Vous recommencer? Si oui, tapez OUI: ")
                 wordWritten = ""

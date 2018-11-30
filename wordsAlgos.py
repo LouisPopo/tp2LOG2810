@@ -9,8 +9,8 @@ class wordsAlgos:
 
 
 
-    def findWords(startingString):
-        
+    def findWords(self, startingString):
+        return
         #1. find state
         #2. find all next exit state
         

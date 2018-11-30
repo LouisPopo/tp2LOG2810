@@ -1,10 +1,4 @@
-import queue
-
-
-class ToListQueue(queue.Queue):
-    def to_list(self):
-        with self.mutex:
-            return list(self.queue)
+from queue import Queue
 
 class Node:
 
@@ -49,7 +43,7 @@ class Automat:
     def __init__(self):
         self.initNode = Node(False, "")
         self.wordDict = dict()
-        self.recentlyUsedWordsQueue = queue.Queue(5)
+        self.recentlyUsedWordsQueue = Queue(5)
 
         self.possibleWords = list()
 
@@ -97,26 +91,6 @@ class Automat:
                 return currentNode
         return currentNode
 
-    
-
-
-    #TODO
-    def displayPossibleWords(self, semiWord):
-        """
-        currentNode = self.initNode
-        for letter in semiWord:
-            if letter in currentNode.nextNodes:
-                currentNode = currentNode.nextNodes[letter]
-
-        if currentNode.isFinal:
-            self.possibleWords.append(currentNode.id)
-
-        for letter in currentNode.nextNodes:
-            self.displayPossibleWords(currentNode.id)
-        return self.possibleWords
-        """
-
-
     def updateWordCounter(self, word):
         self.wordDict[word][0] += 1
     
@@ -127,9 +101,10 @@ class Automat:
         self.recentlyUsedWordsQueue.put(word)
         self.wordDict[word][1] = 1
 
+    #TODO : make a copy of the queue in a list
     def displayRecentlyUsedWords(self):
-        listQueue = ToListQueue(self.recentlyUsedWordsQueue)
-        return listQueue.to_list()
+        printingList = list(self.recentlyUsedWordsQueue.queue)
+        return printingList
 
     def displayWordCounter(self, word):
         return self.wordDict[word][0]

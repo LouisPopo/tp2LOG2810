@@ -8,7 +8,6 @@ def creerDict(nomFichier):
     mots = fichier.split("\n")
     return mots
 
-
 def main():
     """
     a = Automat()
@@ -29,12 +28,14 @@ def main():
     # 2. creer un wordsAlgos a laide de lautomate
     # 3. caller les fonctions sur wordsAlgos
     #OpenFile()
+    
     a = Automat()
     a.createFiniteStateMachine('lexique6.txt')
 
-    node = a.findWordState('exe')
-    wordsList = node.findPossibleWords()
+    a.updateRecentlyUsedWords('bonjour')
+    a.updateRecentlyUsedWords('symbole')
+    a.updateRecentlyUsedWords('symboles')
+    print(str(a.displayRecentlyUsedWords()))
+    print(str(a.displayWordCounter('symbole')))
 
-    for finalWord in wordsList:
-        print(finalWord.id)
-    
+main()
