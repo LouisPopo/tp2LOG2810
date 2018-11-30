@@ -18,7 +18,7 @@ class Node:
         self.nextNodes[letter] = Node(isFinal, letter)
 
     # Returns a word considering current semi-word entered
-    def findPossibleWords(self): 
+    def findPossibleWordsFromNode(self): 
         possibleWords = [] # Empty list of possible words
 
         if self.isFinal :
@@ -26,7 +26,7 @@ class Node:
 
         if self.nextNodes : 
             for nextLetter in self.nextNodes:
-                possibleWords = possibleWords + self.nextNodes[nextLetter].findPossibleWords()
+                possibleWords = possibleWords + self.nextNodes[nextLetter].findPossibleWordsFromNode()
 
 
         return possibleWords
@@ -88,9 +88,9 @@ class Automat:
                 # Used to acces labels and quick search a complete word
                 self.wordDict[word.rstrip()] = listLabels.copy()
 
-    # Takes in a word or semi-word and returns the proper node
-    # Returns initial node is it does not exist
-    def findWordState(self, word):  
+    # Takes in a word or semi-word and returns the list of possible Words
+    # Returns None if semi-word doesnt exist
+    def findPossibleWords(self, word):  
                                     
         currentNode = self.initNode
 
@@ -99,8 +99,9 @@ class Automat:
                 # We change node to the next one
                 currentNode = currentNode.nextNodes[letter] 
             else :
-                return currentNode
-        return currentNode
+                return None
+
+        return currentNode.findPossibleWordsFromNode()
 
     def updateWordCounter(self, word):
         self.wordDict[word][0] += 1

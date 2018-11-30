@@ -1,5 +1,6 @@
 import os.path
 from automatConstructor import *
+import getch
 
 
 #Create Automat object
@@ -63,14 +64,44 @@ def OpenFile():
 #Option a: write
 def write():
     wordWritten = ""
-    done = False
+    #done = False
 
-    while not done:
+    #while not done:
 
-        display2()
+    char = getch.getch()
+    while(char != '1'):
+        wordWritten += char
+        
+        
+        possibleWords = automat.findPossibleWords(wordWritten)
+        
+        if possibleWords == None:
+            print("Aucun mot possible!")
+        else:
+            print("\nMots possibles: ")
+            for word in possibleWords:
+                print(word.id + ", ")
+        
+        print("" + wordWritten)
+        char = getch.getch()
+
+
+
+    
+    #display2()
+
+
+
+    '''
+    while not done
+
+        
         print("Mot présent: " + str(wordWritten))
+        
+        
         choice2 = input("Veuillez choisir un option (a ou b): ")
 
+        
         if choice2 == 'a':
             letterToAdd = input("Veuillez ajouter une lettre à votre mot: ")
             wordWritten += letterToAdd
@@ -98,6 +129,7 @@ def write():
 
         else:
             print("Veuillez choisir un option valide!")
+        '''
     menu()
 
 #Option b: Display 5 recently used words
