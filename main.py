@@ -32,10 +32,10 @@ def main():
     a = Automat()
     a.createFiniteStateMachine('lexique6.txt')
 
-    a.updateRecentlyUsedWords('bonjour')
-    a.updateRecentlyUsedWords('symbole')
-    a.updateRecentlyUsedWords('symboles')
-    print(str(a.displayRecentlyUsedWords()))
+    a.updateWordCounter('bonjour')
+    a.updateWordCounter('symbole')
+    a.updateWordCounter('symbole')
+
     print(str(a.displayWordCounter('symbole')))
 
 main()

@@ -77,7 +77,7 @@ class Automat:
         with open(fileName, 'r') as f:
             for word in f.readlines():
                 self.addWord(word.rstrip())
-                self.wordDict[word.rstrip()] = listLabels
+                self.wordDict[word.rstrip()] = listLabels.copy()
 
 
     def findWordState(self, word):  # prend le debut d'un mot, ou un mot, et retourne le noeud dans l'automate qui contient le semi-mot, ou 
@@ -101,7 +101,6 @@ class Automat:
         self.recentlyUsedWordsQueue.put(word)
         self.wordDict[word][1] = 1
 
-    #TODO : make a copy of the queue in a list
     def displayRecentlyUsedWords(self):
         printingList = list(self.recentlyUsedWordsQueue.queue)
         return printingList
