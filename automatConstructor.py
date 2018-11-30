@@ -13,16 +13,18 @@ class Node:
         self.id = id
         self.nextNodes = dict()
 
+    # Adds a next node to a current node
     def addNode(self, letter, isFinal): 
         self.nextNodes[letter] = Node(isFinal, letter)
 
+    # Returns a word considering current semi-word entered
     def findPossibleWords(self): 
-        possibleWords = [] # liste vide qui va contenir les mots finaux
+        possibleWords = [] # Empty list of possible words
 
         if self.isFinal :
             possibleWords.append(self)
 
-        if self.nextNodes : # si le noeud contient des enfants
+        if self.nextNodes : 
             for nextLetter in self.nextNodes:
                 possibleWords = possibleWords + self.nextNodes[nextLetter].findPossibleWords()
 
@@ -47,6 +49,8 @@ class Automat:
 
         self.possibleWords = list()
 
+    # Adds a letter to a node
+    # Used to create a tree
     def addWord(self, word):
 
         currentNode = self.initNode
@@ -58,7 +62,7 @@ class Automat:
             if letter not in currentNode.nextNodes:
                 
                 isFinal = False
-                if letterCounter == len(word): #on arrive a la fin du mot
+                if letterCounter == len(word):
                     isFinal = True
                 
                 currentWord = currentNode.id + letter
@@ -68,8 +72,10 @@ class Automat:
 
             letterCounter = letterCounter + 1
 
+    # Creates a tree with all the possible words of the file entered
     def createFiniteStateMachine(self, fileName):
         
+        # Fist label is the word counter, second is the recently used boolean
         listLabels = []
         listLabels.append(0)
         listLabels.append(0)
@@ -77,16 +83,21 @@ class Automat:
         with open(fileName, 'r') as f:
             for word in f.readlines():
                 self.addWord(word.rstrip())
+
+                # Secondary dictionnary containing all words
+                # Used to acces labels and quick search a complete word
                 self.wordDict[word.rstrip()] = listLabels.copy()
 
-
-    def findWordState(self, word):  # prend le debut d'un mot, ou un mot, et retourne le noeud dans l'automate qui contient le semi-mot, ou 
-                                    # le noeud initial s'il n'existe pas. 
+    # Takes in a word or semi-word and returns the proper node
+    # Returns initial node is it does not exist
+    def findWordState(self, word):  
+                                    
         currentNode = self.initNode
 
         for letter in word:
             if letter in currentNode.nextNodes:
-                currentNode = currentNode.nextNodes[letter] # on change de noeud on est rendu dans le suivant
+                # We change node to the next one
+                currentNode = currentNode.nextNodes[letter] 
             else :
                 return currentNode
         return currentNode
@@ -94,6 +105,8 @@ class Automat:
     def updateWordCounter(self, word):
         self.wordDict[word][0] += 1
     
+    # Updates the labels dicitonnary and adds the word to the recently used queue
+    # If the queue is full, pop the earliest word entered and add the new one
     def updateRecentlyUsedWords(self, word):
         if self.recentlyUsedWordsQueue.full():
             poppedBack = self.recentlyUsedWordsQueue.get()
@@ -102,12 +115,15 @@ class Automat:
         self.wordDict[word][1] = 1
 
     def displayRecentlyUsedWords(self):
+
+        # Queue to list for printing
         printingList = list(self.recentlyUsedWordsQueue.queue)
         return printingList
 
     def displayWordCounter(self, word):
         return self.wordDict[word][0]
 
+    #Checks if the word is in the file
     def isWord(self, word):
         if word in self.wordDict:
             return True
