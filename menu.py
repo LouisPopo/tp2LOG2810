@@ -1,5 +1,6 @@
 import os.path
 from automatConstructor import *
+import getch
 
 
 #Create Automat object
@@ -69,6 +70,8 @@ def write():
         #Display the options to the user 
         display2()
         print("Mot présent: " + str(wordWritten))
+        
+        
         choice2 = input("Veuillez choisir un option (a ou b): ")
 
         #The user choses to add a letter
@@ -99,6 +102,7 @@ def write():
 
         else:
             print("Veuillez choisir un option valide!")
+        '''
     menu()
 
 #Option b: Display 5 recently used words

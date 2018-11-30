@@ -1,14 +1,11 @@
 from automatConstructor import Node, Automat
 from menu import *
+
 import os
 
 
-def creerDict(nomFichier):
-    fichier = open(nomFichier, "r").read()
-    mots = fichier.split("\n")
-    return mots
-
 def main():
+
     """
     a = Automat()
     mot = "salut"
@@ -29,13 +26,18 @@ def main():
     # 3. caller les fonctions sur wordsAlgos
     #OpenFile()
     
-    a = Automat()
-    a.createFiniteStateMachine('lexique6.txt')
+    
+    #a = Automat()
+    #a.createFiniteStateMachine('lexique6.txt')
 
+    '''
     a.updateWordCounter('bonjour')
     a.updateWordCounter('symbole')
     a.updateWordCounter('symbole')
 
     print(str(a.displayWordCounter('symbole')))
+    '''
+    OpenFile()
 
+   
 main()
