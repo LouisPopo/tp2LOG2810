@@ -11,14 +11,14 @@ def display():
     print(
 '''
 
-**************************************************
+************************************************
 *                    Choix:                      *
-**************************************************
+************************************************
 * a) Écrire un mot                               *
 * b) Afficher les mots récemment utilisés        *
 * c) Afficher le compteur d'un mot               *
 * d) Quitter                                     *
-**************************************************
+************************************************
 '''
     )
 
@@ -27,12 +27,13 @@ def display2():
     print(
 '''
 
-**************************************************
-*                    Choix:                      *
-**************************************************
-* a) Ajouter une lettre au mot                   *
-* b) Entrer le mot                               *
-**************************************************
+************************************************
+*                   Options :                  *
+************************************************
+*           1 pour entrer le mot               *
+*   2 pour retourner à l'arrière d'une lettre  *
+*       3 pour retourner au menu principal     *
+************************************************
 '''
     )
 
@@ -60,50 +61,55 @@ def OpenFile():
     #Go to menu
     menu()
 
-#TODO
 #Option a: write
 def write():
+    display2()
+    print("Veuillez entrer un mot: ")
     wordWritten = ""
-    done = False
-    while not done:
 
-        #Display the options to the user 
+    #Dynamic input of letters
+    char = getch.getch()
+
+    while char != '1' and char != '3':
+
+        #If user choses 2 and the string is empty, refuse operation and restart function
+        #Else if user choses 2, remove last letter of string
+        #Else increment the letter to the string
+        if char == '2' and not wordWritten:
+            print("Opération refusée: aucune lettre entrée")
+            write()
+        elif char == '2' and wordWritten:
+            wordWritten = wordWritten[:-1]
+        else:
+            wordWritten += char
+
+        #Finds all possible words
+        possibleWords = automat.findPossibleWords(wordWritten)
+        
+        #If there is no words with that combination, return error message
+        #Else show all possibilties
+        if possibleWords == None:
+            print("Aucun mot possible!")
+        else:
+            print("\nMots possibles: ")
+            for word in possibleWords:
+                print(word.id + ", ")
+        
         display2()
-        print("Mot présent: " + str(wordWritten))
-        
-        
-        choice2 = input("Veuillez choisir un option (a ou b): ")
+        print("\nMot entré: " + wordWritten)
+        char = getch.getch()
 
-        #The user choses to add a letter
-        if choice2 == 'a':
-            letterToAdd = input("Veuillez ajouter une lettre à votre mot: ")
-            wordWritten += letterToAdd
-            node = automat.findWordState(wordWritten)
-            possibleWords = node.findPossibleWords()
-            if not possibleWords:
-                print("Aucun mot possible!")
-            else:
-                print("\nMots possibles: ")
-                for word in possibleWords:
-                    print(word.id + ", ")
-
-        #The user choses to confirm his word
-        elif choice2 == 'b':
-            if automat.isWord(wordWritten):
+    #If the word exists, update to recently used and its word counter
+    if char == '1':
+        if automat.isWord(wordWritten):
                 automat.updateRecentlyUsedWords(wordWritten)
                 automat.updateWordCounter(wordWritten)
-                done = True
                 print("Le mot existe et est mis à jour!")
-            else:
-                choice3 = input("Ceci n'est pas un mot! Voulez-Vous recommencer? Si oui, tapez OUI: ")
-                wordWritten = ""
-                if choice3 != "OUI":
-                    menu()
-
         else:
-            print("Veuillez choisir un option valide!")
-        '''
+            print("Le mot n'existe pas! Veuillez recommencer.")
+            write()
     menu()
+
 
 #Option b: Display 5 recently used words
 def recentlyUsedWords():

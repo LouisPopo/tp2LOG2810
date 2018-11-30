@@ -13,10 +13,6 @@ class Node:
         self.id = id
         self.nextNodes = dict()
 
-    # Adds a next node to a current node
-    def addNode(self, letter, isFinal): 
-        self.nextNodes[letter] = Node(isFinal, letter)
-
     # Returns a word considering current semi-word entered
     def findPossibleWordsFromNode(self): 
         possibleWords = [] # Empty list of possible words
