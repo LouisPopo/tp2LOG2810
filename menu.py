@@ -64,13 +64,14 @@ def OpenFile():
 def write():
     wordWritten = ""
     done = False
-
     while not done:
 
+        #Display the options to the user 
         display2()
         print("Mot présent: " + str(wordWritten))
         choice2 = input("Veuillez choisir un option (a ou b): ")
 
+        #The user choses to add a letter
         if choice2 == 'a':
             letterToAdd = input("Veuillez ajouter une lettre à votre mot: ")
             wordWritten += letterToAdd
@@ -83,7 +84,7 @@ def write():
                 for word in possibleWords:
                     print(word.id + ", ")
 
-
+        #The user choses to confirm his word
         elif choice2 == 'b':
             if automat.isWord(wordWritten):
                 automat.updateRecentlyUsedWords(wordWritten)
